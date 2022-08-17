@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer';
 import beers from "./data/beer.js";
 
