@@ -64,6 +64,10 @@ const BeerCard = (props) => {
             </>
         )
     }
+ 
+    const handleClick = () => {
+        setHovered(!hovered);
+    }
 
     const getNonHoveredElements = () => {
         return (
@@ -79,7 +83,7 @@ const BeerCard = (props) => {
     }   
 
     return (
-        <div className='beer-card' onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
+        <div className='beer-card' onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} onClick={handleClick}>
             {hovered ? getHoveredElements() : getNonHoveredElements()}
         </div>
     )
