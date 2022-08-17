@@ -57,7 +57,7 @@ const BeerCard = (props) => {
 
                 <div>
                     <p className='beer-try-with'>Try with:</p>
-                    <p className='beer-food-pairing'>{foodPairingElements}</p>       
+                    <div className='beer-food-pairing'>{foodPairingElements}</div>       
                 </div>
   
             </>
