@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getRandomKey } from '../../data/keys';
 import "./BeerCard.scss";
 
 const BeerCard = (props) => {
@@ -36,7 +37,7 @@ const BeerCard = (props) => {
         return food.length < maxFoodLength;
     })
     .map(food => {
-        return <p>{food}</p>;
+        return <p key={getRandomKey()}>{food}</p>;
     })
 
     const handleMouseOver = () => {
