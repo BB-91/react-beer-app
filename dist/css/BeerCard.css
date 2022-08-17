@@ -1,0 +1,44 @@
+.beer-card {
+  width: 300px;
+  height: 350px;
+  border: 2px solid black;
+  margin: 20px;
+  padding: 0.75em;
+  display: grid;
+  row-gap: 20px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px black;
+}
+
+.beer-image {
+  height: 200px;
+  width: auto;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7));
+}
+
+.beer-name {
+  font-weight: bold;
+}
+
+.beer-tagline {
+  font-style: italic;
+}
+
+.beer-front-text-section {
+  display: grid;
+  row-gap: 5px;
+  align-content: center;
+  justify-content: center;
+}
+
+.beer-try-with {
+  font-weight: bold;
+}
+
+.beer-food-pairing {
+  font-style: italic;
+}/*# sourceMappingURL=BeerCard.css.map */
