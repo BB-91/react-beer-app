@@ -55,4 +55,10 @@ div {
 .beer-tagline,
 .beer-food-pairing {
   font-style: italic;
+}
+
+.beer-abv {
+  padding-top: 5px;
+  font-size: 12px;
+  font-weight: bold;
 }/*# sourceMappingURL=BeerCard.css.map */
