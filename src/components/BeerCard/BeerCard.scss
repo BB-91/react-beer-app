@@ -1,9 +1,13 @@
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 p,
 img,
 div {
     pointer-events: none;
 }
-
 
 .beer-card {
     width: 300px;
@@ -20,12 +24,23 @@ div {
     justify-content: center;
     justify-items: center;
 
-
     border-radius: 20px;
     box-shadow: 2px 2px 4px black;
 
     user-select: none;
     pointer-events: all;
+}
+
+.beer-card-content {
+    animation: fadeIn 0.5s;
+    display: grid;
+    row-gap: 15px;
+
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+
 }
 
 .beer-image {
@@ -34,26 +49,13 @@ div {
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7));
 }
 
-.beer-name {
-    font-weight: bold;
-}
-
-.beer-tagline {
-    font-style: italic;
-}
-
-.beer-front-text-section {
-    display: grid;
-    row-gap: 5px;
-
-    align-content: center;
-    justify-content: center;
-}
-
+.beer-name,
 .beer-try-with {
     font-weight: bold;
+    padding-bottom: 5px;
 }
 
+.beer-tagline,
 .beer-food-pairing {
     font-style: italic;
 }
