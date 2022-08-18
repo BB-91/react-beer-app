@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import CheckboxCheck from '../CheckboxGraphic/CheckboxGraphic';
 import "./Checkbox.scss";
 import { filterCriteria, getNewlyFilteredBeers } from '../../App';
+import { BeerContext } from '../../App';
 
 const Checkbox = (props) => {
     const [checked, setChecked] = useState(false);
     const { name, toggleHandlerRef } = props;
+
+    const setFilteredBeers = useContext(BeerContext);
+
+    console.log("render of checkbox: ", name, `checked:`, checked);
 
     useEffect(() => {
         if (!name) {
@@ -26,8 +31,10 @@ const Checkbox = (props) => {
         filterCriteria[name] = newValue;
         const refilteredBeers = getNewlyFilteredBeers();
 
+
         console.log("after checkbox filter: ", refilteredBeers);     
 
+        setFilteredBeers(refilteredBeers);
     }
 
     if (!toggleHandlerRef) {

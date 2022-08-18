@@ -28,10 +28,24 @@ function App() {
 
     return (
             <div className="App">
-                <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
-                <BeerCardContainer beers={beers} />
+                <BeerContext.Provider value={setFilteredBeers}>
+                    <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
+                    {/* <BeerCardContainer beers={beers} /> */}
+                    <BeerCardContainer beers={filteredBeers} />
+                </BeerContext.Provider>
             </div>
     );
 }
+
+// function App() {
+//     const [filteredBeers, setFilteredBeers] = useState(beers);
+
+//     return (
+//             <div className="App">
+//                 <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
+//                 <BeerCardContainer beers={beers} />
+//             </div>
+//     );
+// }
 
 export default App;
