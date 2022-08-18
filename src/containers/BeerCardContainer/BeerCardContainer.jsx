@@ -10,6 +10,7 @@ const BeerCardContainer = (props) => {
     /* 
         Using useRef here will prevent the filtered BeerCards from animating if they were already in the previous filter.
         Only BeerCards ADDED to the filter will play the CSS animation (if filter is removed or becomes less restrictive).
+        Using getRandomKey() would cause a re-render if not saved into a ref, because the key would change on each assignment.
     */
     const allBeerCards = useRef(
         beers.map(beer => {

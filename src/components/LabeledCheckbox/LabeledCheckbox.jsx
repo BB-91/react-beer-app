@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import { snakeCaseToTitleCase } from '../../Util/Util';
 import Checkbox from '../Checkbox/Checkbox';
 import "./LabeledCheckbox.scss";
 
@@ -27,10 +28,11 @@ const LabeledCheckbox = (props) => {
 
     return (
         <div className={getClassNamesStr()} >
-            <span onClick={handleSpanClick}>{name}</span>
+            <span onClick={handleSpanClick}>{snakeCaseToTitleCase(name)}</span>
             <Checkbox name={name} toggleHandlerRef={toggleHandlerRef}/>
         </div>
     )
+
 }
 
 export default LabeledCheckbox;

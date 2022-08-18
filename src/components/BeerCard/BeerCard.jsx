@@ -8,7 +8,7 @@ const BeerCard = (props) => {
     const maxFoodLength = 35;
 
     const [hovered, setHovered] = useState(false);
-    
+
     const hoverOverriden = useRef(false); // allow changing of displayed content on click. Override handleMouseOver() behavior on re-render.
     const foodPairingElements = useRef(
         food_pairing.filter(food => {
@@ -55,7 +55,10 @@ const BeerCard = (props) => {
         setHovered(false);
     }
 
-    const handleClick = () => {
+    const handleClick = (event) => {
+        console.log("beer card clicked!")
+        console.log(`event: `, event)
+        console.log(`event.type: `, event.type)
         hoverOverriden.current = !hoverOverriden.current;
         setHovered(!hovered);
     }

@@ -17,7 +17,6 @@ const getRandomKey = () => {
 }
 
 
-
 /**
  * Get sentences from a paragraph.
  * @param {string} paragraph 
@@ -49,5 +48,10 @@ const getSentences = (paragraph, maxParagraphLength) => {
     return sentences;
 }
 
+const snakeCaseToTitleCase = (str) => {
+    let titleCase = str.replaceAll(/_([a-z])/g, (match, p1 ) => " " + p1.toUpperCase());
+    titleCase = titleCase.replace(/^(.)/, (match, p1 ) => p1.toUpperCase());
+    return titleCase;
+}
 
-export { getSentences, getRandomKey };
+export { getSentences, getRandomKey, snakeCaseToTitleCase };
