@@ -18,10 +18,9 @@ export const getNewlyFilteredBeers = () => {
         beers.filter(beer => filterCriteria.high_alcohol ? beer.abv > 6.0 : true)
             .filter(beer => filterCriteria.classic_range ? +(beer.first_brewed.split("/")[1]) < 2010 : true)
             .filter(beer => filterCriteria.high_acidity ? beer.ph < 4.0 : true)
-            .filter(beer => filterCriteria.search ? beer.name.includes(filterCriteria.search) : true)
+            .filter(beer => filterCriteria.search ? beer.name.toUpperCase().includes(filterCriteria.search.toUpperCase()) : true)
     );
 }
-
 
 function App() {
     const [filteredBeers, setFilteredBeers] = useState(beers);
