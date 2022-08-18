@@ -6,14 +6,53 @@
     user-select: none;
 }
 
-.App {
+header {
+    --headerFontSize: clamp(20px, 2vw, 36px);
+    font-size: var(--headerFontSize);
+    height: calc(var(--headerFontSize) * 2.0);
+    padding-bottom: 4px;
+
+    text-shadow:
+        1px 1px 1px black,
+        1px -1px 1px black,
+        -1px 1px 1px black,
+        -1px -1px 1px black,
+        2px 2px 1px black,
+        ;
+
+    background-image: linear-gradient(to top, #3eb0d0, #6dbcd2);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+main {
     display: grid;
     grid-template-columns: 1fr;
 }
 
+
 @media screen and (min-width:1000px) {
-    .App {
+    main {
         display: grid;
         grid-template-columns: 15% 85%;
-    }    
+    }
 }
+
+// .App {
+//     display: grid;
+//     grid-template-columns: 1fr;
+// }
+
+
+// @media screen and (min-width:1000px) {
+//     .App {
+//         display: grid;
+//         grid-template-columns: 15% 85%;
+//     }    
+// }

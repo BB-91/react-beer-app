@@ -28,8 +28,14 @@ function App() {
     return (
             <div className="App">
                 <BeerContext.Provider value={setFilteredBeers}>
-                    <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
-                    <BeerCardContainer filteredBeers={filteredBeers} />
+                    <header>
+                        Punk Beer API - React Demo
+                    </header>
+                    
+                    <main>
+                        <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
+                        <BeerCardContainer filteredBeers={filteredBeers} />
+                    </main>
                 </BeerContext.Provider>
             </div>
     );
