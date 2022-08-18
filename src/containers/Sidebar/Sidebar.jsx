@@ -6,19 +6,16 @@ const Sidebar = () => {
   return (
     <div className='sidebar'>
 
-        <form action="">
+    <LabeledCheckboxGroup
+        names={["High Alcohol", "Classic Range", "High Acidity"]}
+        isColumn={false}
+    />
 
-            <LabeledCheckboxGroup
-                names={["High Alcohol", "Classic Range", "High Acidity"]}
-                isColumn={false}
-            />
+    <div>
+        <p>Search</p>
+        <input type="search" name="search-filter" id="search-filter" />
+    </div>
 
-            <div>
-                <p>Search</p>
-                <input type="search" name="search-filter" id="search-filter" />
-            </div>
-
-        </form>
 
     </div>
   )
