@@ -17,8 +17,8 @@ const Sidebar = (props) => {
         <div className='sidebar'>
             <LabeledCheckboxGroup names={checkboxNames} isColumn={false} />
             <div>
-                <p>Search</p>
-                <input type="search" name="search-filter" id="search-filter" onInput={handleInput}/>
+                {/* <p>Search</p> */}
+                <input type="search" name="search-filter" id="search-filter" placeholder="Filter by name" onInput={handleInput}/>
             </div>
         </div>
     )

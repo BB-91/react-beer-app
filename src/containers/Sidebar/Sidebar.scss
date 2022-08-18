@@ -3,7 +3,12 @@
     height: 100%;
 
     input[type="search"] {
-        background-color: red;
+        height: 2em;
+        width: clamp(25px, 100%, 200px);
+
+        &:focus::placeholder {
+            color: transparent;
+          }
     }
 
 }

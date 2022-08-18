@@ -3,5 +3,9 @@
   height: 100%;
 }
 .sidebar input[type=search] {
-  background-color: red;
+  height: 2em;
+  width: clamp(25px, 100%, 200px);
+}
+.sidebar input[type=search]:focus::placeholder {
+  color: transparent;
 }/*# sourceMappingURL=Sidebar.css.map */

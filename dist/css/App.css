@@ -8,5 +8,12 @@
 
 .App {
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 1000px) {
+  .App {
+    display: grid;
+    grid-template-columns: 15% 85%;
+  }
 }/*# sourceMappingURL=App.css.map */
