@@ -1,0 +1,7 @@
+.checkbox-check {
+  width: 100%;
+  height: 100%;
+}
+.checkbox-check.checked {
+  background-color: black;
+}/*# sourceMappingURL=CheckboxCheck.css.map */

@@ -1,14 +1,14 @@
 import './App.scss';
 import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer';
+import Sidebar from './containers/Sidebar/Sidebar';
 import beers from "./data/beer.js";
 
 function App() {
-    
 
     return (
         <div className="App">
-            My React App
-            <BeerCardContainer beers={beers}/>
+            <Sidebar />
+            <BeerCardContainer beers={beers} />
         </div>
     );
 }

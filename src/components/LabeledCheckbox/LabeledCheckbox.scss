@@ -1,0 +1,17 @@
+.labeled-checkbox-wrapper {
+    display: grid;
+    grid-auto-flow: column;
+    column-gap: 10px;
+
+    align-content: center;
+    align-items: center;
+    justify-content: end;
+    justify-items: center;
+
+
+    &.column {
+        grid-auto-flow: row;
+        justify-content: center;
+        margin: 10px 0;
+    }
+}

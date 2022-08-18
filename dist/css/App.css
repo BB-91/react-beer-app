@@ -3,4 +3,10 @@
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  user-select: none;
+}
+
+.App {
+  display: grid;
+  grid-template-columns: 15% 85%;
 }/*# sourceMappingURL=App.css.map */

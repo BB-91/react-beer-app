@@ -3,11 +3,7 @@
     100% { opacity: 1; }
 }
 
-p,
-img,
-div {
-    pointer-events: none;
-}
+
 
 .beer-card {
     width: 300px;
@@ -27,8 +23,15 @@ div {
     border-radius: 20px;
     box-shadow: 2px 2px 4px black;
 
-    user-select: none;
+    
     pointer-events: all;
+
+
+    p,
+    img,
+    div {
+        pointer-events: none;
+    }
 }
 
 .beer-card-content {
