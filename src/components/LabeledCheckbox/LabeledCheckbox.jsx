@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Checkbox from '../Checkbox/Checkbox';
 import "./LabeledCheckbox.scss";
 
+
 const LabeledCheckbox = (props) => {
     const { name, isColumn } = props;
     const toggleHandlerRef = useRef(null);
@@ -34,7 +35,7 @@ const LabeledCheckbox = (props) => {
     return (
         <div className={getClassNamesStr()} >
             <span onClick={handleSpanClick}>{name}</span>
-            <Checkbox toggleHandlerRef={toggleHandlerRef}/>
+            <Checkbox name={name} toggleHandlerRef={toggleHandlerRef}/>
         </div>
     )
 }

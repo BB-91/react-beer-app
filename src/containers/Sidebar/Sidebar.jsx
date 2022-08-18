@@ -2,23 +2,25 @@ import React from 'react';
 import LabeledCheckboxGroup from '../../components/LabeledCheckboxGroup/LabeledCheckboxGroup';
 import "./Sidebar.scss";
 
-const Sidebar = () => {
-  return (
-    <div className='sidebar'>
+const Sidebar = (props) => {
+    const { checkboxNames } = props;
 
-    <LabeledCheckboxGroup
-        names={["High Alcohol", "Classic Range", "High Acidity"]}
-        isColumn={false}
-    />
+    return (
+        <div className='sidebar'>
 
-    <div>
-        <p>Search</p>
-        <input type="search" name="search-filter" id="search-filter" />
-    </div>
+            <LabeledCheckboxGroup
+                names={checkboxNames}
+                isColumn={false}
+            />
+
+            <div>
+                <p>Search</p>
+                <input type="search" name="search-filter" id="search-filter" />
+            </div>
 
 
-    </div>
-  )
+        </div>
+    )
 }
 
 export default Sidebar;
