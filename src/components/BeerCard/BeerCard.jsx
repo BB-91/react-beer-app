@@ -4,10 +4,8 @@ import "./BeerCard.scss";
 
 const BeerCard = (props) => {
     const { name, tagline, description, image_url, abv, food_pairing } = props.beer;
-
     const [hovered, setHovered] = useState(false);
     const hoverOverriden = useRef(false); // allow changing of displayed content on click. Override handleMouseOver() behavior on re-render.
-
     const maxParagraphLength = 200;
     const maxFoodLength = 35;
 

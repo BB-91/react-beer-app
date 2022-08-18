@@ -7,10 +7,6 @@ const LabeledCheckbox = (props) => {
     const { name, isColumn } = props;
     const toggleHandlerRef = useRef(null);
 
-    const getDisplayStyle = () => {
-        return isColumn ? 'block' : 'inline';
-    }
-
     const handleSpanClick = () => {
         const toggleHandler = toggleHandlerRef.current;
 
@@ -28,9 +24,6 @@ const LabeledCheckbox = (props) => {
     const getClassNamesStr = () => {
         return `labeled-checkbox-wrapper` + (isColumn ? " column" : "")
     }
-
-
-    console.log(`getDisplayStyle(): `, getDisplayStyle())
 
     return (
         <div className={getClassNamesStr()} >

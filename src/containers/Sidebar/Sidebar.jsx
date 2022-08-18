@@ -7,18 +7,11 @@ const Sidebar = (props) => {
 
     return (
         <div className='sidebar'>
-
-            <LabeledCheckboxGroup
-                names={checkboxNames}
-                isColumn={false}
-            />
-
+            <LabeledCheckboxGroup names={checkboxNames} isColumn={false} />
             <div>
                 <p>Search</p>
                 <input type="search" name="search-filter" id="search-filter" />
             </div>
-
-
         </div>
     )
 }

@@ -5,12 +5,10 @@ import { filterCriteria, getNewlyFilteredBeers } from '../../App';
 import { BeerContext } from '../../App';
 
 const Checkbox = (props) => {
-    const [checked, setChecked] = useState(false);
     const { name, toggleHandlerRef } = props;
+    const [checked, setChecked] = useState(false);
 
     const setFilteredBeers = useContext(BeerContext);
-
-    console.log("render of checkbox: ", name, `checked:`, checked);
 
     useEffect(() => {
         if (!name) {
@@ -25,15 +23,13 @@ const Checkbox = (props) => {
 
     const handleClick = () => {
         const newValue = !checked;
-        console.log(`Checkbox '${name}' checked: ${!checked}.`);
         setChecked(newValue);
         
         filterCriteria[name] = newValue;
-        const refilteredBeers = getNewlyFilteredBeers();
+        const refilteredBeers = getNewlyFilteredBeers();   
 
-
-        console.log("after checkbox filter: ", refilteredBeers);     
-
+        // console.log(`globalSetters: `, globalSetters)
+        // globalSetters["App"](refilteredBeers);
         setFilteredBeers(refilteredBeers);
     }
 

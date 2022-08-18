@@ -5,7 +5,6 @@ import "./BeerCardContainer.scss";
 
 const BeerCardContainer = (props) => {
     const { beers } = props;
-    console.log(`beers: `, beers);
 
     const beerCards = beers.map(beer => {
         return <BeerCard beer={beer} key={getRandomKey()}/>

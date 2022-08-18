@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { getRandomKey } from '../../data/keys';
 import LabeledCheckbox from '../LabeledCheckbox/LabeledCheckbox';
 import "./LabeledCheckboxGroup.scss";
@@ -10,14 +10,16 @@ const LabeledCheckboxGroup = (props) => {
     if (!Array.isArray(names)) { throw new Error("Not an array: ", names); }
     if (!names.length) { throw new Error("Got an empty array", names)}
 
-    const labeledCheckboxes = names.map(name => {
-        return <LabeledCheckbox name={name} isColumn={isColumn} key={getRandomKey()}/>
-    })
+    const labeledCheckboxes = useRef(
+        names.map(name => {
+            return <LabeledCheckbox name={name} isColumn={isColumn} key={getRandomKey()}/>
+        })
+    )
 
     return (
         <div className='labeled-checkbox-group-wrapper'>
             <div className='labeled-checkbox-group'>
-                {labeledCheckboxes}
+                {labeledCheckboxes.current}
             </div>
         </div>
     )
