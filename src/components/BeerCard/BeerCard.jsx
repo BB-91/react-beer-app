@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { getRandomKey } from '../../data/keys';
+import { getSentences, getRandomKey } from '../../Util/Util';
 import "./BeerCard.scss";
 
 const BeerCard = (props) => {
@@ -8,6 +8,7 @@ const BeerCard = (props) => {
     const maxFoodLength = 35;
 
     const [hovered, setHovered] = useState(false);
+    
     const hoverOverriden = useRef(false); // allow changing of displayed content on click. Override handleMouseOver() behavior on re-render.
     const foodPairingElements = useRef(
         food_pairing.filter(food => {
@@ -18,36 +19,11 @@ const BeerCard = (props) => {
         })
     ) 
 
-    const getSentences = () => {
-        let buffer = "";
-        const sentences = [];
-        let paragraphLength = 0;
-
-        for (let i=0; i<description.length; i++) {
-            const char = description.charAt(i);
-            buffer += char;
-            if (".?!".includes(char)){
-                const sentenceLength = buffer.length;
-                if ((paragraphLength + sentenceLength) < maxParagraphLength) {
-                    paragraphLength += sentenceLength;
-                    sentences.push(buffer);
-                    buffer = "";
-                } else {
-                    return sentences;
-                }
-            }
-        }
-        if (buffer) {
-            throw new Error(`buffer not empty: `, buffer);
-        }
-        return sentences;
-    }
-
     const hoveredElements = useRef(
         <div className='beer-card-content' key={getRandomKey()}>
             <div>
                 <p className='beer-name'>{name}</p>
-                <p className='beer-description'>{getSentences()}</p>
+                <p className='beer-description'>{getSentences(description, maxParagraphLength)}</p>
             </div>
 
             <div>

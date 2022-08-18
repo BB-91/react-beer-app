@@ -27,9 +27,6 @@ const Checkbox = (props) => {
         
         filterCriteria[name] = newValue;
         const refilteredBeers = getNewlyFilteredBeers();   
-
-        // console.log(`globalSetters: `, globalSetters)
-        // globalSetters["App"](refilteredBeers);
         setFilteredBeers(refilteredBeers);
     }
 

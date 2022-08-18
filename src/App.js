@@ -13,8 +13,6 @@ export const filterCriteria = {
     search: "",
 }
 
-// export const globalSetters = {};
-
 export const getNewlyFilteredBeers = () => {
     return (
         beers.filter(beer => filterCriteria.high_alcohol ? beer.abv > 6.0 : true)
@@ -28,31 +26,14 @@ export const getNewlyFilteredBeers = () => {
 function App() {
     const [filteredBeers, setFilteredBeers] = useState(beers);
 
-    // globalSetters["App"] = setFilteredBeers;
-
     return (
             <div className="App">
                 <BeerContext.Provider value={setFilteredBeers}>
                     <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
-                    {/* <BeerCardContainer beers={beers} /> */}
-                    <BeerCardContainer beers={filteredBeers} />
+                    <BeerCardContainer filteredBeers={filteredBeers} />
                 </BeerContext.Provider>
             </div>
     );
 }
-
-// function App() {
-//     const [filteredBeers, setFilteredBeers] = useState(beers);
-
-//     globalSetters["App"] = setFilteredBeers;
-
-//     return (
-//             <div className="App">
-//                 <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
-//                 {/* <BeerCardContainer beers={beers} /> */}
-//                 <BeerCardContainer beers={filteredBeers} />
-//             </div>
-//     );
-// }
 
 export default App;

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { getRandomKey } from '../../data/keys';
+import { getRandomKey } from '../../Util/Util';
 import LabeledCheckbox from '../LabeledCheckbox/LabeledCheckbox';
 import "./LabeledCheckboxGroup.scss";
 
