@@ -3,7 +3,7 @@ import { getSentences, getRandomKey } from '../../Util/Util';
 import "./BeerCard.scss";
 
 const BeerCard = (props) => {
-    const { name, tagline, description, image_url, abv, food_pairing } = props.beer;
+    const { name, id, tagline, description, image_url, abv, food_pairing } = props.beer;
     const maxParagraphLength = 200;
     const maxFoodLength = 35;
 
@@ -64,7 +64,7 @@ const BeerCard = (props) => {
     }
 
     return (
-        <div className='beer-card' onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} onClick={handleClick} key={getRandomKey()}>
+        <div className='beer-card' onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave} onClick={handleClick} key={id}>
             {hovered && !hoverOverriden.current ? hoveredElements.current : nonHoveredElements.current}
         </div>
     )

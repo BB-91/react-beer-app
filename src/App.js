@@ -36,6 +36,7 @@ function App() {
         })
         .then(beerArr => {
             beers = beerArr;
+            // console.log(`beers: `, beers);
             setFilteredBeers(beerArr);
         })
         .catch(err => {
@@ -44,6 +45,7 @@ function App() {
     }, [])
 
     const getContent = () => {
+        console.log(`filteredBeers: `, filteredBeers);
         return (
             <div className="App">   
                 <header>
