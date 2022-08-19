@@ -1,11 +1,10 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import './App.scss';
 import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer';
 import Sidebar from './containers/Sidebar/Sidebar';
-import beers from "./data/beer.js";
 
+export let beers = null;
 export const BeerContext = createContext()
-
 export const filterCriteria = {
     high_alcohol: false,
     classic_range: false,
@@ -23,9 +22,24 @@ export const getNewlyFilteredBeers = () => {
 }
 
 function App() {
-    const [filteredBeers, setFilteredBeers] = useState(beers);
+    const [filteredBeers, setFilteredBeers] = useState(null);
 
-    return (
+    useEffect(() => {
+        fetch("https://api.punkapi.com/v2/beers")
+        .then(res => {
+            return res.json()
+        })
+        .then(beerArr => {
+            beers = beerArr;
+            setFilteredBeers(beerArr);
+        })
+        .catch(err => {
+            throw new Error("Error: ", err);
+        });
+    }, [])
+    
+    const getContent = () => {
+        return (
             <div className="App">
                 <BeerContext.Provider value={setFilteredBeers}>
                     <header>
@@ -38,7 +52,15 @@ function App() {
                     </main>
                 </BeerContext.Provider>
             </div>
-    );
+        );
+    }
+
+    return (
+        <>
+            {beers && getContent()}
+        </>
+    )
 }
 
 export default App;
+
