@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import BeerCard from '../../components/BeerCard/BeerCard';
 import { getRandomKey } from '../../Util/Util';
 import "./BeerCardContainer.scss";
-// import beers from '../../data/beer';
 import { beers } from '../../App';
 
 const BeerCardContainer = (props) => {
