@@ -1,10 +1,10 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.scss';
 import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer';
 import Sidebar from './containers/Sidebar/Sidebar';
 
 export let beers = null;
-export const BeerContext = createContext()
+
 export const filterCriteria = {
     high_alcohol: false,
     classic_range: false,
@@ -23,6 +23,11 @@ export const getNewlyFilteredBeers = () => {
 
 function App() {
     const [filteredBeers, setFilteredBeers] = useState(null);
+    // const [state setState]
+    // can use state obj to save the filter criteria
+    // should get the API to do the filter
+
+    // can save the filtered beerArrays here, and reference later. (caching)
 
     useEffect(() => {
         fetch("https://api.punkapi.com/v2/beers")
@@ -37,20 +42,18 @@ function App() {
             throw new Error("Error: ", err);
         });
     }, [])
-    
+
     const getContent = () => {
         return (
-            <div className="App">
-                <BeerContext.Provider value={setFilteredBeers}>
-                    <header>
-                        Punk Beer API - React Demo
-                    </header>
-                    
-                    <main>
-                        <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} />
-                        <BeerCardContainer filteredBeers={filteredBeers} />
-                    </main>
-                </BeerContext.Provider>
+            <div className="App">   
+                <header>
+                    Punk Beer API - React Demo
+                </header>
+                
+                <main>
+                    <Sidebar checkboxNames={Object.keys(filterCriteria).slice(0, -1)} setFilteredBeers={setFilteredBeers}/>
+                    <BeerCardContainer filteredBeers={filteredBeers} />
+                </main>   
             </div>
         );
     }

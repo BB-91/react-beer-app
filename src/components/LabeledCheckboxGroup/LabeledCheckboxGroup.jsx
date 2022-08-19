@@ -4,7 +4,7 @@ import LabeledCheckbox from '../LabeledCheckbox/LabeledCheckbox';
 import "./LabeledCheckboxGroup.scss";
 
 const LabeledCheckboxGroup = (props) => {
-    const { names, isColumn } = props;
+    const { names, isColumn, setFilteredBeers } = props;
 
     if (!names) { throw new Error("Requires a names array prop"); }
     if (!Array.isArray(names)) { throw new Error("Not an array: ", names); }
@@ -12,7 +12,7 @@ const LabeledCheckboxGroup = (props) => {
 
     const labeledCheckboxes = useRef(
         names.map(name => {
-            return <LabeledCheckbox name={name} isColumn={isColumn} key={getRandomKey()}/>
+            return <LabeledCheckbox name={name} isColumn={isColumn} key={getRandomKey()} setFilteredBeers={setFilteredBeers}/>
         })
     )
 

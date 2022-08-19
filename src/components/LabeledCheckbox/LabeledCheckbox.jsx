@@ -1,38 +1,46 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useState } from 'react';
+import { filterCriteria, getNewlyFilteredBeers } from '../../App';
 import { snakeCaseToTitleCase } from '../../Util/Util';
-import Checkbox from '../Checkbox/Checkbox';
 import "./LabeledCheckbox.scss";
 
-
 const LabeledCheckbox = (props) => {
-    const { name, isColumn } = props;
-    const toggleHandlerRef = useRef(null);
+    const [checked, setChecked] = useState(Boolean(props.checked));
+    const { name, isColumn, setFilteredBeers } = props;
+    const checkedClass = checked ? "checked" : "unchecked";
+    const checkboxWrapperClass = `labeled-checkbox-wrapper` + (isColumn ? " column" : "");
+
+    useEffect(() => {
+        if (!name) {
+            throw new Error(`Didn't receive name prop`);
+        }
+
+        if (!Object.keys(filterCriteria).includes(name)) {
+            throw new Error(`name not a filterCriteria key: `, name, filterCriteria)
+        }
+    }, [])
+
 
     const handleSpanClick = () => {
-        const toggleHandler = toggleHandlerRef.current;
-
-        if (!toggleHandler) {
-            throw new Error(`toggleHandler not set`)
-        }
-        
-        if (typeof toggleHandler !== "function") {
-            throw new Error(`Not a function: `, toggleHandler);
-        }
-
-        toggleHandler();
+        handleCheckboxClick();
     }
 
-    const getClassNamesStr = () => {
-        return `labeled-checkbox-wrapper` + (isColumn ? " column" : "")
+    const handleCheckboxClick = () => {
+        const newValue = !checked;
+        setChecked(newValue);
+
+        filterCriteria[name] = newValue;
+        const refilteredBeers = getNewlyFilteredBeers();   
+        setFilteredBeers(refilteredBeers);
     }
 
     return (
-        <div className={getClassNamesStr()} >
+        <div className={checkboxWrapperClass} >
             <span onClick={handleSpanClick}>{snakeCaseToTitleCase(name)}</span>
-            <Checkbox name={name} toggleHandlerRef={toggleHandlerRef}/>
+            <div className='checkbox' onClick={handleCheckboxClick}>
+                <div className={`checkbox-graphic ${checkedClass}`}></div>
+            </div>
         </div>
     )
-
 }
 
 export default LabeledCheckbox;

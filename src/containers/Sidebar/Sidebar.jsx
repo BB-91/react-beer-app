@@ -1,12 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import LabeledCheckboxGroup from '../../components/LabeledCheckboxGroup/LabeledCheckboxGroup';
-import { filterCriteria, getNewlyFilteredBeers, BeerContext } from '../../App';
+import { filterCriteria, getNewlyFilteredBeers } from '../../App';
 import "./Sidebar.scss";
 
 
 const Sidebar = (props) => {
-    const { checkboxNames } = props;
-    const setFilteredBeers = useContext(BeerContext);
+    const { checkboxNames, setFilteredBeers } = props;
 
     const handleInput = (event) => {
         filterCriteria.search = event.target.value;  
@@ -15,9 +14,8 @@ const Sidebar = (props) => {
 
     return (
         <div className='sidebar'>
-            <LabeledCheckboxGroup names={checkboxNames} isColumn={false} />
+            <LabeledCheckboxGroup names={checkboxNames} isColumn={false} setFilteredBeers={setFilteredBeers} />
             <div>
-                {/* <p>Search</p> */}
                 <input type="search"
                         name="search-filter"
                         id="search-filter"
