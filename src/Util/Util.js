@@ -43,7 +43,7 @@ const getSentences = (paragraph, maxParagraphLength) => {
         }
     }
     if (buffer) {
-        throw new Error(`buffer not empty: `, buffer);
+        throw new Error(`buffer not empty: '${buffer}' (Did you forget punctuation?)`);
     }
     return sentences;
 }

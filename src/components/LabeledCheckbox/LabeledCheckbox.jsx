@@ -29,8 +29,12 @@ const LabeledCheckbox = (props) => {
         setChecked(newValue);
 
         filterCriteria[name] = newValue;
+        console.log(`filterCriteria: `, filterCriteria)
+        
         const refilteredBeers = getNewlyFilteredBeers();   
         setFilteredBeers(refilteredBeers);
+
+        
     }
 
     return (

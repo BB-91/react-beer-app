@@ -4,17 +4,22 @@ import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer'
 import Sidebar from './containers/Sidebar/Sidebar';
 
 export let beers = null;
+let customBeers = [];
+
 
 export const filterCriteria = {
     high_alcohol: false,
     classic_range: false,
     high_acidity: false,
+    real_beers: false,
     search: "",
 }
 
 export const getNewlyFilteredBeers = () => {
+    const _filteredBeers = filterCriteria.real_beers ? customBeers : beers;
+
     return (
-        beers.filter(beer => filterCriteria.high_alcohol ? beer.abv > 6.0 : true)
+        _filteredBeers.filter(beer => filterCriteria.high_alcohol ? beer.abv > 6.0 : true)
             .filter(beer => filterCriteria.classic_range ? +(beer.first_brewed.split("/")[1]) < 2010 : true)
             .filter(beer => filterCriteria.high_acidity ? beer.ph < 4.0 : true)
             .filter(beer => filterCriteria.search ? beer.name.toUpperCase().includes(filterCriteria.search.toUpperCase()) : true)
@@ -29,19 +34,39 @@ function App() {
 
     // can save the filtered beerArrays here, and reference later. (caching)
 
-    useEffect(() => {
+
+    const saveOriginalBeers = () => {
         fetch("https://api.punkapi.com/v2/beers")
         .then(res => {
             return res.json()
         })
         .then(beerArr => {
             beers = beerArr;
-            // console.log(`beers: `, beers);
-            setFilteredBeers(beerArr);
+            addCustomBeers()
         })
         .catch(err => {
-            throw new Error("Error: ", err);
+            throw new Error(`Error: ${err}`);
         });
+    }
+
+    const addCustomBeers = () => {
+        fetch("http://localhost:3010/api/beers/")
+        .then(res => {
+            return res.json()
+        })
+        .then(_customBeersObj => {                  
+            customBeers = _customBeersObj.customBeers;
+            console.log(`customBeers: `, customBeers);
+            setFilteredBeers(beers);
+
+        })
+        .catch(err => {
+            throw new Error(`Error: ${err}`);
+        });
+    }
+
+    useEffect(() => {
+        saveOriginalBeers()
     }, [])
 
     const getContent = () => {
