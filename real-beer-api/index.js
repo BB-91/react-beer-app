@@ -2,11 +2,20 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import router from "./routes/beerAPI.js";
+import { sequelize } from "./db/index.js";
 
 // http://localhost:3010/api/beers/
 
 const app = express();
 const port = process.env.PORT || 3010;
+
+sequelize.sync()
+.then(result => {
+    console.log(`result: `, result);
+})
+.catch(err => {
+    console.log(`err: `, err)
+})
 
 app.use(bodyParser.json());
 app.use(cors({origin: "*"}))

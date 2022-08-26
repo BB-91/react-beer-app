@@ -41,10 +41,13 @@ function App() {
     // can save the filtered beerArrays here, and reference later. (caching)
 
     const getCustomBeers = () => {
-        return fetch(customApiURL)
+        // return fetch(customApiURL)
+        return fetch("http://localhost:3010/api/beers")
         .then(res => { return res.json(); })
-        .then(_customBeersObj => {
-            const _customBeers = _customBeersObj.customBeers;
+        .then(_customBeers => {
+            // console.log(`_customBeersObj: `, _customBeersObj);
+            // const _customBeers = _customBeersObj.customBeers;
+            // const _customBeers = _customBeersObj.customBeers;
             console.log(`_customBeers: `, _customBeers);
             return _customBeers;
         })
@@ -71,44 +74,6 @@ function App() {
         .catch(err => { throw new Error(`error: ${err}`) })
     }
 
-    // const postCustomBeer = () => {
-    //     return fetch(customApiURL, {
-    //         method: 'POST',
-    //         headers: {
-    //           'Accept': 'application/json',
-    //           'Content-Type': 'application/json'
-    //         },
-    //         body: `{"id": 999, "name": "Beer C"}`,
-    //     })
-    //     .then(res => { return res.json(); })
-    //     .then(data => {
-
-    //     })
-    //     .catch(err => { throw new Error(err) })
-    // }
-
-    // const postCustomBeer = () => {
-    //     const newBeer = {id: 999, name: "Beer C"}
-    //     const jsonStr = JSON.stringify(newBeer);
-    //     console.log(`jsonStr: `, jsonStr);
-
-    //     return fetch(customApiURL, {
-    //         method: 'POST',
-    //         headers: {
-    //           'Accept': 'application/json',
-    //           'Content-Type': 'application/json'
-    //         },
-    //         body: jsonStr,
-    //     })
-    //     .then(res => { return res.json(); })
-    //     .then(data => {
-    //         console.log(`postCustomBeer data: `, data);
-    //         return newBeer;
-    //     })
-    //     .catch(err => { throw new Error(err) })
-    // }
-
-
     const postCustomBeer = () => {
         const newID = beers.length + customBeers.length + (counter++);
         console.log(`newID: `, newID)
@@ -130,26 +95,10 @@ function App() {
             ],
         }
 
-        // const newBeer = {
-        //     // id: 28,
-        //     id: newID,
-        //     name: "Beer C",
-        //     tagline: "Beer C tagline",
-        //     first_brewed: "09/2007",
-        //     description: "Beer C description.",
-        //     image_url: `${imgFolder}BudLight.png`,
-        //     abv: 4.8,
-        //     ph: 4.8,
-        //     food_pairing: [
-        //         "Pizza",
-        //         "Chips",
-        //         "Hamburgers"
-        //     ],
-        // }
 
-        // const jsonStr = JSON.stringify(newBeer);
         const jsonStr = JSON.stringify({beer: newBeer});
         console.log(`jsonStr: `, jsonStr);
+
 
         return fetch(customApiURL, {
             method: 'POST',
@@ -158,7 +107,6 @@ function App() {
               'Content-Type': 'application/json'
             },
             body: jsonStr,
-            // body: newBeer,
         })
         .then(res => {
             return res.json();
@@ -172,25 +120,35 @@ function App() {
         })
     }
 
-
     // useEffect(() => {
+    //     if (effectRan.current) {
+    //         return;
+    //     }
+
+    //     effectRan.current = true;
+    //     console.log("ENTRY POINT USE EFFECT!")
+
     //     savePunkBeers()
-    //     // .then( _punkBeers => {
-    //     //     return postCustomBeer();
-    //     // })
     //     .then( _punkBeers => {
-    //         // console.log(`_newBeer: `, _newBeer);
+    //         return postCustomBeer();
+    //     })
+    //     .then( _newBeer => {
+    //         console.log(`_newBeer: `, _newBeer);
     //         return saveCustomBeers();
     //     })
     //     .then(_customBeers => {
     //         console.log("App useEffect completed.");
     //         console.log(`beers: `, beers);
     //         console.log(`customBeers: `, customBeers)
+            
+
     //         setFilteredBeers(beers);
     //     })
     //     .catch(err =>{ throw new Error(`Error: ${err}`) })
 
     // }, [])
+
+
 
     useEffect(() => {
         if (effectRan.current) {
@@ -198,25 +156,61 @@ function App() {
         }
 
         effectRan.current = true;
+        console.log("ENTRY POINT USE EFFECT!")
 
-        savePunkBeers()
-        .then( _punkBeers => {
-            return postCustomBeer();
-        })
-        .then( _newBeer => {
-            console.log(`_newBeer: `, _newBeer);
-            return saveCustomBeers();
-        })
+        getCustomBeers()
         .then(_customBeers => {
-            console.log("App useEffect completed.");
-            console.log(`beers: `, beers);
-            console.log(`customBeers: `, customBeers)
-            
-            setFilteredBeers(beers);
+            console.log(`_customBeers: `, _customBeers)
         })
-        .catch(err =>{ throw new Error(`Error: ${err}`) })
 
+
+        // getPunkBeers()
+        // .then(_punkBeers => {
+        //     console.log(`_punkBeers: `, _punkBeers)
+        // })
     }, [])
+
+    // useEffect(() => {
+    //     if (effectRan.current) {
+    //         return;
+    //     }
+
+    //     effectRan.current = true;
+    //     console.log("ENTRY POINT USE EFFECT!")
+
+    //     getPunkBeers()
+    //     .then(_punkBeers => {
+    //         console.log(`_punkBeers: `, _punkBeers)
+    //     })
+    // }, [])
+
+    // useEffect(() => {
+    //     if (effectRan.current) {
+    //         return;
+    //     }
+
+    //     effectRan.current = true;
+    //     console.log("ENTRY POINT USE EFFECT!")
+
+    //     savePunkBeers()
+    //     .then( _punkBeers => {
+    //         return postCustomBeer();
+    //     })
+    //     .then( _newBeer => {
+    //         console.log(`_newBeer: `, _newBeer);
+    //         return saveCustomBeers();
+    //     })
+    //     .then(_customBeers => {
+    //         console.log("App useEffect completed.");
+    //         console.log(`beers: `, beers);
+    //         console.log(`customBeers: `, customBeers)
+            
+
+    //         setFilteredBeers(beers);
+    //     })
+    //     .catch(err =>{ throw new Error(`Error: ${err}`) })
+
+    // }, [])
 
 
 
