@@ -3,6 +3,7 @@ import { getSentences, getRandomKey } from '../../Util/Util';
 import "./BeerCard.scss";
 
 const BeerCard = (props) => {
+    console.log(`BeerCard props: `, props);
     const { name, id, tagline, description, image_url, abv, food_pairing } = props.beer;
     const maxParagraphLength = 200;
     const maxFoodLength = 35;

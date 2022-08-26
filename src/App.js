@@ -1,11 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './App.scss';
 import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer';
 import Sidebar from './containers/Sidebar/Sidebar';
 
+const imgFolder = "http://localhost:3010/images/";
+const customApiURL = "http://localhost:3010/api/beers/";
+// const customApiURL = "https://api.punkapi.com/v2/beers";
+
 export let beers = null;
 let customBeers = [];
-
+let counter = 0;
 
 export const filterCriteria = {
     high_alcohol: false,
@@ -28,46 +32,137 @@ export const getNewlyFilteredBeers = () => {
 
 function App() {
     const [filteredBeers, setFilteredBeers] = useState(null);
+    const effectRan = useRef(false);
+
     // const [state setState]
     // can use state obj to save the filter criteria
     // should get the API to do the filter
 
     // can save the filtered beerArrays here, and reference later. (caching)
 
-
-    const saveOriginalBeers = () => {
-        fetch("https://api.punkapi.com/v2/beers")
-        .then(res => {
-            return res.json()
+    const getCustomBeers = () => {
+        return fetch(customApiURL)
+        .then(res => { return res.json(); })
+        .then(_customBeersObj => {
+            const _customBeers = _customBeersObj.customBeers;
+            console.log(`_customBeers: `, _customBeers);
+            return _customBeers;
         })
-        .then(beerArr => {
-            beers = beerArr;
-            addCustomBeers()
-        })
-        .catch(err => {
-            throw new Error(`Error: ${err}`);
-        });
+        .catch(err => { throw new Error(`Error: ${err}`); });
     }
 
-    const addCustomBeers = () => {
-        fetch("http://localhost:3010/api/beers/")
-        .then(res => {
-            return res.json()
-        })
-        .then(_customBeersObj => {                  
-            customBeers = _customBeersObj.customBeers;
-            console.log(`customBeers: `, customBeers);
-            setFilteredBeers(beers);
+    const getPunkBeers = () => {
+        return fetch("https://api.punkapi.com/v2/beers")
+        .then(res => { return res.json(); })
+        .then(beerArr => { return beerArr; })
+        .catch(err => { throw new Error(`Error: ${err}`); });
+    }
 
+
+    const savePunkBeers = () => {
+        return getPunkBeers()
+        .then(_punkBeers => { beers = _punkBeers; return _punkBeers; })
+        .catch(err => { throw new Error(`Error: ${err}`); });
+    }
+
+    const saveCustomBeers = () => {
+        return getCustomBeers()
+        .then(_customBeers => { customBeers = _customBeers; return _customBeers; })
+        .catch(err => { throw new Error(`error: ${err}`) })
+    }
+
+    const postCustomBeer = () => {
+        const newID = beers.length + customBeers.length + (counter++);
+        console.log(`newID: `, newID)
+
+        const newBeer = {
+            // id: 28,
+            id: newID,
+            name: "Beer C",
+            tagline: "Beer C tagline",
+            first_brewed: "09/2007",
+            description: "Beer C description.",
+            image_url: `${imgFolder}BudLight.png`,
+            abv: 4.8,
+            ph: 4.8,
+            food_pairing: [
+                "Pizza",
+                "Chips",
+                "Hamburgers"
+            ],
+        }
+
+        const jsonStr = JSON.stringify(newBeer);
+        console.log(`jsonStr: `, jsonStr);
+
+        return fetch(customApiURL, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: jsonStr,
+            // body: newBeer,
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log(`postCustomBeer data: `, data);
+            return newBeer;
         })
         .catch(err => {
-            throw new Error(`Error: ${err}`);
-        });
+            throw new Error(`Error: ${err}`)
+        })
     }
+
+
+    // useEffect(() => {
+    //     savePunkBeers()
+    //     // .then( _punkBeers => {
+    //     //     return postCustomBeer();
+    //     // })
+    //     .then( _punkBeers => {
+    //         // console.log(`_newBeer: `, _newBeer);
+    //         return saveCustomBeers();
+    //     })
+    //     .then(_customBeers => {
+    //         console.log("App useEffect completed.");
+    //         console.log(`beers: `, beers);
+    //         console.log(`customBeers: `, customBeers)
+    //         setFilteredBeers(beers);
+    //     })
+    //     .catch(err =>{ throw new Error(`Error: ${err}`) })
+
+    // }, [])
 
     useEffect(() => {
-        saveOriginalBeers()
+        if (effectRan.current) {
+            return;
+        }
+
+        effectRan.current = true;
+
+        savePunkBeers()
+        .then( _punkBeers => {
+            return postCustomBeer();
+        })
+        .then( _newBeer => {
+            console.log(`_newBeer: `, _newBeer);
+            return saveCustomBeers();
+        })
+        .then(_customBeers => {
+            console.log("App useEffect completed.");
+            console.log(`beers: `, beers);
+            console.log(`customBeers: `, customBeers)
+            
+            setFilteredBeers(beers);
+        })
+        .catch(err =>{ throw new Error(`Error: ${err}`) })
+
     }, [])
+
+
 
     const getContent = () => {
         console.log(`filteredBeers: `, filteredBeers);
