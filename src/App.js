@@ -4,13 +4,10 @@ import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer'
 import Sidebar from './containers/Sidebar/Sidebar';
 
 const imgFolder = "http://localhost:3010/images/";
-// const customApiURL = "http://localhost:3010/api/beers/";
 const customApiURL = "http://localhost:3010/api/beers";
-// const customApiURL = "https://api.punkapi.com/v2/beers";
 
 export let beers = [];
 let customBeers = [];
-let counter = 0;
 
 export const filterCriteria = {
     high_alcohol: false,
@@ -37,13 +34,11 @@ function App() {
 
     const getPunkBeers = async () => {
         const _punkBeers = await fetch("https://api.punkapi.com/v2/beers").then(res => { return res.json(); })
-        // console.log(`_punkBeers: `, _punkBeers);
         return _punkBeers;
     }
 
     const getCustomBeers = async () => {
         const _customBeers = await fetch(customApiURL).then(res => { return res.json(); })
-        // console.log(`_customBeers: `, _customBeers);
         return _customBeers
     }
 
@@ -80,12 +75,10 @@ function App() {
 
     useEffect(() => {
         if (effectRan.current) {
-            // console.log("returning from useEffect early")
             return;
         }
 
         effectRan.current = true;
-        // console.log("ENTRY POINT USE EFFECT!")
 
         const effectFunc = async () => {
             let id = 0;
@@ -103,6 +96,7 @@ function App() {
             
             setFilteredBeers(beers);
         }
+
         effectFunc();
     }, [])
 
@@ -110,7 +104,6 @@ function App() {
 
 
     const getContent = () => {
-        // console.log(`filteredBeers: `, filteredBeers);
         return (
             <div className="App">   
                 <header>
@@ -125,8 +118,7 @@ function App() {
         );
     }
 
-
-    // console.log(`beers.length: `, beers.length)
+    
     return (
         <>
             {(beers.length > 0) && getContent()}

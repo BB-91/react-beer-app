@@ -12,23 +12,16 @@ const BeerCard = (props) => {
     const hoverOverriden = useRef(false); // allow changing of displayed content on click. Override handleMouseOver() behavior on re-render.
     
     let foodPairingArr = [];
-    // if (typeof foodPairingArr == "string") {
     if (typeof food_pairing == "string") {
         foodPairingArr = food_pairing.split("_");
     } else if (Array.isArray(food_pairing)) {
         foodPairingArr = food_pairing
     } else {
         throw new Error(`Invalid type: ${typeof food_pairing}`)
-        // console.log(`typeof food_pairing: `, typeof food_pairing)
     }
 
-    // console.log(`food_pairing: `, food_pairing)
-    // const foodPairingArr = food_pairing.split("_");
     const foodPairingElements = useRef(
-        
-
-        // food_pairing.filter(food => {
-            foodPairingArr.filter(food => {
+        foodPairingArr.filter(food => {
             return food.length < maxFoodLength;
         })
         .map(food => {

@@ -6,8 +6,6 @@ import "./BeerCardContainer.scss";
 const BeerCardContainer = (props) => {
     const { filteredBeers } = props;
 
-    // console.log(`filteredBeers IN THE BeerCardContainer: `, filteredBeers)
-
     /* 
         Using useRef here will prevent the filtered BeerCards from animating if they were already in the previous filter.
         Only BeerCards ADDED to the filter will play the CSS animation (if filter is removed or becomes less restrictive).
