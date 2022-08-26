@@ -37,13 +37,13 @@ function App() {
 
     const getPunkBeers = async () => {
         const _punkBeers = await fetch("https://api.punkapi.com/v2/beers").then(res => { return res.json(); })
-        console.log(`_punkBeers: `, _punkBeers);
+        // console.log(`_punkBeers: `, _punkBeers);
         return _punkBeers;
     }
 
     const getCustomBeers = async () => {
         const _customBeers = await fetch(customApiURL).then(res => { return res.json(); })
-        console.log(`_customBeers: `, _customBeers);
+        // console.log(`_customBeers: `, _customBeers);
         return _customBeers
     }
 
@@ -80,29 +80,26 @@ function App() {
 
     useEffect(() => {
         if (effectRan.current) {
-            console.log("returning from useEffect early")
+            // console.log("returning from useEffect early")
             return;
         }
 
         effectRan.current = true;
-        console.log("ENTRY POINT USE EFFECT!")
-
+        // console.log("ENTRY POINT USE EFFECT!")
 
         const effectFunc = async () => {
-
             let id = 0;
 
             const _punkBeers = await getPunkBeers();
             id += _punkBeers.length;
-
-            const _customBeer = await postCustomBeer(id);
-
+            
             const _customBeers = await getCustomBeers();
             id += _customBeers.length;
 
-            beers = _punkBeers;
-            customBeers = _customBeers;
+            const _customBeer = await postCustomBeer(id);
 
+            beers = _punkBeers;
+            customBeers = [..._customBeers, _customBeer];
             
             setFilteredBeers(beers);
         }
@@ -113,7 +110,7 @@ function App() {
 
 
     const getContent = () => {
-        console.log(`filteredBeers: `, filteredBeers);
+        // console.log(`filteredBeers: `, filteredBeers);
         return (
             <div className="App">   
                 <header>
@@ -129,7 +126,7 @@ function App() {
     }
 
 
-    console.log(`beers.length: `, beers.length)
+    // console.log(`beers.length: `, beers.length)
     return (
         <>
             {(beers.length > 0) && getContent()}
