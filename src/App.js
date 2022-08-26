@@ -4,10 +4,11 @@ import BeerCardContainer from './containers/BeerCardContainer/BeerCardContainer'
 import Sidebar from './containers/Sidebar/Sidebar';
 
 const imgFolder = "http://localhost:3010/images/";
-const customApiURL = "http://localhost:3010/api/beers/";
+// const customApiURL = "http://localhost:3010/api/beers/";
+const customApiURL = "http://localhost:3010/api/beers";
 // const customApiURL = "https://api.punkapi.com/v2/beers";
 
-export let beers = null;
+export let beers = [];
 let customBeers = [];
 let counter = 0;
 
@@ -34,53 +35,38 @@ function App() {
     const [filteredBeers, setFilteredBeers] = useState(null);
     const effectRan = useRef(false);
 
-    // const [state setState]
-    // can use state obj to save the filter criteria
-    // should get the API to do the filter
-
-    // can save the filtered beerArrays here, and reference later. (caching)
-
-    const getCustomBeers = () => {
-        // return fetch(customApiURL)
-        return fetch("http://localhost:3010/api/beers")
-        .then(res => { return res.json(); })
-        .then(_customBeers => {
-            // console.log(`_customBeersObj: `, _customBeersObj);
-            // const _customBeers = _customBeersObj.customBeers;
-            // const _customBeers = _customBeersObj.customBeers;
-            console.log(`_customBeers: `, _customBeers);
-            return _customBeers;
-        })
-        .catch(err => { throw new Error(`Error: ${err}`); });
+    const getPunkBeers = async () => {
+        const _punkBeers = await fetch("https://api.punkapi.com/v2/beers").then(res => { return res.json(); })
+        console.log(`_punkBeers: `, _punkBeers);
+        return _punkBeers;
     }
 
-    const getPunkBeers = () => {
-        return fetch("https://api.punkapi.com/v2/beers")
-        .then(res => { return res.json(); })
-        .then(beerArr => { return beerArr; })
-        .catch(err => { throw new Error(`Error: ${err}`); });
+    const getCustomBeers = async () => {
+        const _customBeers = await fetch(customApiURL).then(res => { return res.json(); })
+        console.log(`_customBeers: `, _customBeers);
+        return _customBeers
     }
 
-
-    const savePunkBeers = () => {
-        return getPunkBeers()
-        .then(_punkBeers => { beers = _punkBeers; return _punkBeers; })
-        .catch(err => { throw new Error(`Error: ${err}`); });
+    const savePunkBeers = async () => {
+        const _punkBeers = await getPunkBeers();
+        beers = _punkBeers;
+        return _punkBeers;
     }
 
-    const saveCustomBeers = () => {
-        return getCustomBeers()
-        .then(_customBeers => { customBeers = _customBeers; return _customBeers; })
-        .catch(err => { throw new Error(`error: ${err}`) })
+    const saveCustomBeers = async () => {
+        const _customBeers = await getCustomBeers()
+        customBeers = _customBeers;
+        return _customBeers;
     }
 
-    const postCustomBeer = () => {
-        const newID = beers.length + customBeers.length + (counter++);
-        console.log(`newID: `, newID)
+    const postCustomBeer = async (id) => {
+        console.log("id in postCustomBeer: ", id)
+        // console.log("in postCustomBeer")
+
+        // id: 8354974,
 
         const newBeer = {
-            // id: 28,
-            id: newID,
+            id: id,
             name: "Beer C",
             tagline: "Beer C tagline",
             first_brewed: "09/2007",
@@ -92,125 +78,93 @@ function App() {
                 "Pizza",
                 "Chips",
                 "Hamburgers"
-            ],
+            ].join("_"),
         }
 
+        console.log(`newBeer: `, newBeer)
+        console.log(`JSON.stringify(newBeer): `, JSON.stringify(newBeer))
 
-        const jsonStr = JSON.stringify({beer: newBeer});
-        console.log(`jsonStr: `, jsonStr);
-
-
-        return fetch(customApiURL, {
+        const data = await fetch(customApiURL, {
             method: 'POST',
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            body: jsonStr,
+            body: JSON.stringify(newBeer),
         })
-        .then(res => {
-            return res.json();
-        })
-        .then(data => {
-            console.log(`postCustomBeer data: `, data);
-            return newBeer;
-        })
-        .catch(err => {
-            throw new Error(`Error: ${err}`)
-        })
+
+        return newBeer;
+
+        // const data = await fetch(customApiURL, {
+        //     method: 'POST',
+        //     headers: {
+        //       'Accept': 'application/json',
+        //       'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify(newBeer),
+        // })
+
     }
-
-    // useEffect(() => {
-    //     if (effectRan.current) {
-    //         return;
-    //     }
-
-    //     effectRan.current = true;
-    //     console.log("ENTRY POINT USE EFFECT!")
-
-    //     savePunkBeers()
-    //     .then( _punkBeers => {
-    //         return postCustomBeer();
-    //     })
-    //     .then( _newBeer => {
-    //         console.log(`_newBeer: `, _newBeer);
-    //         return saveCustomBeers();
-    //     })
-    //     .then(_customBeers => {
-    //         console.log("App useEffect completed.");
-    //         console.log(`beers: `, beers);
-    //         console.log(`customBeers: `, customBeers)
-            
-
-    //         setFilteredBeers(beers);
-    //     })
-    //     .catch(err =>{ throw new Error(`Error: ${err}`) })
-
-    // }, [])
-
-
 
     useEffect(() => {
         if (effectRan.current) {
+            console.log("returning from useEffect early")
             return;
         }
 
         effectRan.current = true;
         console.log("ENTRY POINT USE EFFECT!")
 
-        getCustomBeers()
-        .then(_customBeers => {
-            console.log(`_customBeers: `, _customBeers)
-        })
 
+        const effectFunc = async () => {
+            console.log("fkn message.")
 
-        // getPunkBeers()
-        // .then(_punkBeers => {
-        //     console.log(`_punkBeers: `, _punkBeers)
-        // })
+            let id = 0;
+    
+            const _punkBeers = await getPunkBeers();
+            console.log(`_punkBeers: `, _punkBeers);
+            id += _punkBeers.length;
+
+            console.log(`id: `, id)
+
+            const _customBeers = await getCustomBeers();
+            console.log(`_customBeers: `, _customBeers);
+            id += _customBeers.length;
+
+            const _customBeer = await postCustomBeer(id);
+            console.log("added a custom beer inside useEffect: ", _customBeer);
+
+        }
+
+        // const effectFunc = async () => {
+        //     if (effectRan.current) {
+        //         console.log("returning from useEffect early")
+        //         return;
+        //     }
+    
+        //     effectRan.current = true;
+        //     console.log("ENTRY POINT USE EFFECT!")
+    
+        //     let id = 0;
+    
+        //     const _punkBeers = await getPunkBeers();
+        //     console.log(`_punkBeers: `, _punkBeers);
+        //     id += _punkBeers.length;
+
+        //     const _customBeers = await getCustomBeers();
+        //     console.log(`_customBeers: `, _customBeers);
+        //     id += _customBeers.length;
+            
+        //     const _customBeer = postCustomBeer(id);
+        //     console.log("added a custom beer inside useEffect: ", _customBeer);
+        // }
+
+        effectFunc();
+
+        console.log("after post postCustomBeer");
+
     }, [])
 
-    // useEffect(() => {
-    //     if (effectRan.current) {
-    //         return;
-    //     }
-
-    //     effectRan.current = true;
-    //     console.log("ENTRY POINT USE EFFECT!")
-
-    //     getPunkBeers()
-    //     .then(_punkBeers => {
-    //         console.log(`_punkBeers: `, _punkBeers)
-    //     })
-    // }, [])
-
-    // useEffect(() => {
-    //     if (effectRan.current) {
-    //         return;
-    //     }
-
-    //     effectRan.current = true;
-    //     console.log("ENTRY POINT USE EFFECT!")
-
-    //     savePunkBeers()
-    //     .then( _punkBeers => {
-    //         return postCustomBeer();
-    //     })
-    //     .then( _newBeer => {
-    //         console.log(`_newBeer: `, _newBeer);
-    //         return saveCustomBeers();
-    //     })
-    //     .then(_customBeers => {
-    //         console.log("App useEffect completed.");
-    //         console.log(`beers: `, beers);
-    //         console.log(`customBeers: `, customBeers)
-            
-
-    //         setFilteredBeers(beers);
-    //     })
-    //     .catch(err =>{ throw new Error(`Error: ${err}`) })
-
-    // }, [])
 
 
 
@@ -232,9 +186,15 @@ function App() {
 
     return (
         <>
-            {beers && getContent()}
+            {(beers.length > 0) && getContent()}
         </>
     )
+
+    // return (
+    //     <>
+    //         {beers && getContent()}
+    //     </>
+    // )
 }
 
 export default App;
