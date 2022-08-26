@@ -71,6 +71,44 @@ function App() {
         .catch(err => { throw new Error(`error: ${err}`) })
     }
 
+    // const postCustomBeer = () => {
+    //     return fetch(customApiURL, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Accept': 'application/json',
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: `{"id": 999, "name": "Beer C"}`,
+    //     })
+    //     .then(res => { return res.json(); })
+    //     .then(data => {
+
+    //     })
+    //     .catch(err => { throw new Error(err) })
+    // }
+
+    // const postCustomBeer = () => {
+    //     const newBeer = {id: 999, name: "Beer C"}
+    //     const jsonStr = JSON.stringify(newBeer);
+    //     console.log(`jsonStr: `, jsonStr);
+
+    //     return fetch(customApiURL, {
+    //         method: 'POST',
+    //         headers: {
+    //           'Accept': 'application/json',
+    //           'Content-Type': 'application/json'
+    //         },
+    //         body: jsonStr,
+    //     })
+    //     .then(res => { return res.json(); })
+    //     .then(data => {
+    //         console.log(`postCustomBeer data: `, data);
+    //         return newBeer;
+    //     })
+    //     .catch(err => { throw new Error(err) })
+    // }
+
+
     const postCustomBeer = () => {
         const newID = beers.length + customBeers.length + (counter++);
         console.log(`newID: `, newID)
@@ -92,7 +130,25 @@ function App() {
             ],
         }
 
-        const jsonStr = JSON.stringify(newBeer);
+        // const newBeer = {
+        //     // id: 28,
+        //     id: newID,
+        //     name: "Beer C",
+        //     tagline: "Beer C tagline",
+        //     first_brewed: "09/2007",
+        //     description: "Beer C description.",
+        //     image_url: `${imgFolder}BudLight.png`,
+        //     abv: 4.8,
+        //     ph: 4.8,
+        //     food_pairing: [
+        //         "Pizza",
+        //         "Chips",
+        //         "Hamburgers"
+        //     ],
+        // }
+
+        // const jsonStr = JSON.stringify(newBeer);
+        const jsonStr = JSON.stringify({beer: newBeer});
         console.log(`jsonStr: `, jsonStr);
 
         return fetch(customApiURL, {
